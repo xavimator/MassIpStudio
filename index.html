@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mass Ip Studio — 3D Design Studio</title>
+<title>MASS IP STUDIO — 3D Design Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -280,7 +280,8 @@
   .contact-inner{padding:110px 0 60px;text-align:left;}
   .contact-title{
     font-family:var(--display);font-weight:800;
-    font-size:clamp(34px,7vw,96px);line-height:0.98;letter-spacing:-0.02em;
+    font-size:clamp(16px,2.2vw,28px);line-height:1.2;letter-spacing:-0.02em;
+    max-width:100%;word-break:break-word;overflow-wrap:break-word;
   }
   .contact-title a{
     background:linear-gradient(100deg,var(--ink) 40%, var(--amber));
@@ -322,7 +323,7 @@
 
 <header>
   <nav>
-    <a href="#home" class="logo"><span class="dot"></span>MASS IP</a>
+    <a href="#home" class="logo"><span class="dot"></span>MASS IP STUDIO</a>
     <div class="navlinks">
       <a href="#home">HOME</a>
       <a href="#work">WORK</a>
@@ -370,7 +371,7 @@
     <p class="hero-sub">We focus on visualisation, bringing ideas to life.</p>
     <div class="hero-actions">
       <a href="#work" class="btn-primary">VIEW PROJECTS</a>
-      <a href="https://youtu.be/JlOFcvgzKM8" target="_blank" rel="noopener" class="btn-ghost"><span class="play-ring">▶</span> WATCH SHOWREEL</a>
+      <a href="#" id="showreel-btn" class="btn-ghost"><span class="play-ring">▶</span> WATCH SHOWREEL</a>
     </div>
   </div>
   <div class="coords"><span>X 24.108</span><span>Y 07.552</span><span>Z 91.004</span></div>
@@ -630,7 +631,7 @@
     <h2 class="contact-title reveal"><a href="mailto:hello@massipstudio.com">hello@massipstudio.com</a></h2>
     <div class="contact-meta reveal">
       <div>© 2026 · MASS IP STUDIO · ALL RIGHTS RESERVED</div>
-      <div class="foot-links">
+      <div class="foot-links" style="display:none">
         <a href="#">INSTAGRAM</a>
         <a href="#">LINKEDIN</a>
         <a href="#">BEHANCE</a>
@@ -666,7 +667,60 @@
     });
   }, {threshold:0.18});
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Showreel modal
+  document.addEventListener('DOMContentLoaded', function(){
+    const showreelBtn = document.getElementById('showreel-btn');
+    const showreelModal = document.getElementById('showreel-modal');
+    const showreelFrame = document.getElementById('showreel-frame');
+    const showreelClose = document.getElementById('showreel-close');
+    const showreelSrc = 'https://www.youtube.com/embed/JlOFcvgzKM8?autoplay=1&rel=0';
+
+    function openShowreel(e){
+      e.preventDefault();
+      showreelFrame.src = showreelSrc;
+      showreelModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeShowreel(){
+      showreelModal.classList.remove('open');
+      showreelFrame.src = '';
+      document.body.style.overflow = '';
+    }
+    showreelBtn.addEventListener('click', openShowreel);
+    showreelClose.addEventListener('click', closeShowreel);
+    showreelModal.addEventListener('click', (e) => { if(e.target === showreelModal) closeShowreel(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeShowreel(); });
+  });
 </script>
+
+<div id="showreel-modal" class="showreel-modal">
+  <div class="showreel-modal-inner">
+    <button id="showreel-close" class="showreel-close" aria-label="Close">✕</button>
+    <div class="showreel-video-wrap">
+      <iframe id="showreel-frame" src="" title="Showreel" frameborder="0"
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<style>
+  .showreel-modal{
+    position:fixed;inset:0;background:rgba(11,7,20,0.92);
+    display:none;align-items:center;justify-content:center;
+    z-index:999;padding:24px;
+  }
+  .showreel-modal.open{display:flex;}
+  .showreel-modal-inner{position:relative;width:100%;max-width:1100px;}
+  .showreel-video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--line);}
+  .showreel-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;}
+  .showreel-close{
+    position:absolute;top:-44px;right:0;background:transparent;border:none;
+    color:var(--ink);font-size:22px;cursor:pointer;line-height:1;
+    width:36px;height:36px;
+  }
+  .showreel-close:hover{color:var(--amber);}
+</style>
 
 </body>
 </html>
